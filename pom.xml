@@ -3,7 +3,7 @@
   <groupId>upm.ssa.app</groupId>
   <artifactId>bank</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Bank Service using Zookeeper</name>
+  <name>Banking with Zookeeper</name>
   
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -49,7 +49,7 @@
                     </descriptorRefs>
                         <archive>
                             <manifest>
-                                <mainClass>com.remcokortekaas.app.Main</mainClass>
+                                <mainClass>upm.ssa.app.Main</mainClass>
                             </manifest>
                         </archive>
                 </configuration>
