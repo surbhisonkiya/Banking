@@ -1,1 +1,16 @@
-/target/
+# Add any directories, files, or patterns you don't want to be tracked by version control
+build/
+dist/
+bin/
+*.project/
+.project/
+.project
+*.settings/
+.settings/
+.settings
+*.classpath/
+.classpath/
+.classpath
+.DS_Store
+.DS_Store/
+*.DS_Store/
