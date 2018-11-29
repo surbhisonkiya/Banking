@@ -49,7 +49,7 @@
                     </descriptorRefs>
                         <archive>
                             <manifest>
-                                <mainClass>upm.ssa.app.Main</mainClass>
+                                <mainClass>upm.ssa.app.MainBank</mainClass>
                             </manifest>
                         </archive>
                 </configuration>
