@@ -47,7 +47,7 @@ public class SendMessagesBank implements SendMessages {
 
 	public void forwardOperationToNode(OperationBank operation, String nodePath) {
 
-		System.out.println("FOward to node: " + nodePath);
+		System.out.println("Foward to node: " + nodePath);
 
 		byte[] operationBytes = new byte[0];
 		try {
@@ -67,7 +67,7 @@ public class SendMessagesBank implements SendMessages {
 
 	public void forwardOperationToFollowers(OperationBank operation) {
 
-		System.out.println("forward operation to followers: " + operation);
+		System.out.println("Forward operation to followers: " + operation);
 
 		List<String> operationNodes = null;
 		try {
