@@ -14,7 +14,7 @@ public class MainBank {
 	private ZooKeeper zk = null;
 	private static Bank bank = null;
 
-	String[] hosts = {"127.0.0.1:2181", "127.0.0.1:2182", "127.0.0.1:2183"};
+	String[] hosts = {"138.4.31.89:2181", "138.4.31.90:2182"};
 
 	public static void main(String[] args) throws KeeperException, InterruptedException {
 
@@ -147,12 +147,12 @@ public class MainBank {
 
 	public void initMembers(Bank bank) {
 
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(1, "Angel Alarcón", 100)));
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(2, "Bernardo Bueno", 200)));
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(3, "Carlos Cepeda", 300)));
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(4, "Daniel Díaz", 400)));
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(5, "Eugenio Escobar", 500)));
-		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(6, "Fernando Ferrero", 600)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(1, "Surbhi Sonkiya", 1000)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(2, "Giovanni Vuolo", 2500)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(3, "Raffaele Perini", 6500)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(4, "Zsolt Dargo", 4000)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(5, "Carol Martina", 499)));
+		bank.handleReceiverMsg(new OperationBank(OperationEnum.CREATE_CLIENT, new Client(6, "Christopher James", 299)));
 	}
 
 }
