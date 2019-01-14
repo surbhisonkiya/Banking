@@ -1,10 +1,10 @@
 package upm.ssa.watchers;
 
 import upm.ssa.bank.Bank;
-import upm.ssa.bank.OperationBank;
-import upm.ssa.bank.OperationEnum;
+import upm.ssa.bank.OpsBank;
+import upm.ssa.bank.OpsEnum;
 import upm.ssa.bank.ElectionManager;
-import upm.ssa.bank.OperationsManager;
+import upm.ssa.bank.OpsManager;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -30,17 +30,17 @@ public class OperationsWatcher implements Watcher {
     @Override
     public void process(WatchedEvent event) {
         if (event.getPath().equals(this.nodename)) {
-            List<String> operations = null;
+            List<String> ops = null;
             try {
-                operations = zk.getChildren(this.nodename, false);
+                ops = zk.getChildren(this.nodename, false);
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
 
-            System.out.println("Operations: " + operations);
+            System.out.println("Ops: " + ops);
 
-            for (String operation_id : operations) {
-                String nodePath = this.nodename + "/" + operation_id;
+            for (String op_id : ops) {
+                String nodePath = this.nodename + "/" + op_id;
                 byte[] data = null;
                 try {
                     data = zk.getData(nodePath, false, null);
@@ -49,15 +49,15 @@ public class OperationsWatcher implements Watcher {
                 } catch (KeeperException | InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    OperationBank operation = null;
+                    OpsBank op = null;
                     try {
-                        operation = OperationBank.byteToObj(data);
+                        op = OpsBank.byteToObj(data);
                     } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
-                    bank.handleReceiverMsg(operation);
-                    if (this.bank.getIsLeader()) this.bank.sendMessages.forwardOperationToFollowers(operation);
+                    bank.handleReceiverMsg(op);
+                    if (this.bank.getIsLeader()) this.bank.sendMessages.forwardOpToFollowers(op);
                 }
             }
         }

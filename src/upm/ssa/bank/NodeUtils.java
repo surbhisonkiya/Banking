@@ -24,12 +24,12 @@ public class NodeUtils {
         return nodename;
     }
 
-    public static String getLeaderOperationNodeName (ZooKeeper zk, String leaderElectionNodeName) throws KeeperException, InterruptedException, UnsupportedEncodingException {
+    public static String getLeaderOpNodeName (ZooKeeper zk, String leaderElectionNodeName) throws KeeperException, InterruptedException, UnsupportedEncodingException {
 
-        String leaderOperationNodeName = null;
+        String leaderOpNodeName = null;
         Stat stat = zk.exists(leaderElectionNodeName, false);
-        leaderOperationNodeName = new String(zk.getData(leaderElectionNodeName, false, stat), "UTF-8");
+        leaderOpNodeName = new String(zk.getData(leaderElectionNodeName, false, stat), "UTF-8");
 
-        return leaderOperationNodeName;
+        return leaderOpNodeName;
     }
 }

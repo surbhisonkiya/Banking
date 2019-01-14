@@ -18,46 +18,46 @@ public class SendMessagesBank implements SendMessages {
 		this.bank = bank;
 	}
 
-	private void sendMessage(OperationBank operation, boolean isLeader) {
+	private void sendMessage(OpsBank op, boolean isLeader) {
 		if (isLeader){
-			forwardOperationToFollowers(operation);
+			forwardOpToFollowers(op);
 		} else {
-			forwardOperationToLeader(operation);
+			forwardOpToLeader(op);
 		}
 	}
 
-	private void forwardOperationToLeader(OperationBank operation) {
-		byte[] operationBytes = new byte[0];
+	private void forwardOpToLeader(OpsBank op) {
+		byte[] opBytes = new byte[0];
 		try {
-			operationBytes = OperationBank.objToByte(operation);
+			opBytes = OpsBank.objToByte(op);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		// Get leader operationNodeName which is stored as data in the electionNodeName of the leader
+		// Get leader opNodeName which is stored as data in the electionNodeName of the leader
 		String leaderElectionNodeName = ElectionManager.root + "/" + this.bank.getLeader();
 		try {
-			String leaderOperationNodeName = NodeUtils.getLeaderOperationNodeName(zk, leaderElectionNodeName);
-			zk.create(leaderOperationNodeName + "/", operationBytes,
+			String leaderOpNodeName = NodeUtils.getLeaderOpNodeName(zk, leaderElectionNodeName);
+			zk.create(leaderOpNodeName + "/", opBytes,
 					ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 		} catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void forwardOperationToNode(OperationBank operation, String nodePath) {
+	public void forwardOpToNode(OpsBank op, String nodePath) {
 
 		System.out.println("Foward to node: " + nodePath);
 
-		byte[] operationBytes = new byte[0];
+		byte[] opBytes = new byte[0];
 		try {
-			operationBytes = OperationBank.objToByte(operation);
+			opBytes = OpsBank.objToByte(op);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			zk.create(nodePath + "/", operationBytes,
+			zk.create(nodePath + "/", opBytes,
 					ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 		} catch (KeeperException | InterruptedException e) {
 			e.printStackTrace();
@@ -65,32 +65,32 @@ public class SendMessagesBank implements SendMessages {
 
 	}
 
-	public void forwardOperationToFollowers(OperationBank operation) {
+	public void forwardOpToFollowers(OpsBank op) {
 
-		System.out.println("Forward operation to followers: " + operation);
+		System.out.println("Forward op to followers: " + op);
 
-		List<String> operationNodes = null;
+		List<String> opNodes = null;
 		try {
-			operationNodes = zk.getChildren(OperationsManager.root, false);
+			opNodes = zk.getChildren(OpsManager.root, false);
 		} catch (KeeperException | InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		byte[] operationBytes = new byte[0];
+		byte[] opBytes = new byte[0];
 		try {
-			operationBytes = OperationBank.objToByte(operation);
+			opBytes = OpsBank.objToByte(op);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (Iterator iterator = operationNodes.iterator(); iterator.hasNext(); ) {
-			String operation_node_id = (String) iterator.next();
+		for (Iterator iterator = opNodes.iterator(); iterator.hasNext(); ) {
+			String op_node_id = (String) iterator.next();
 
 			// Do not send the update to the leader (itself) again
 			String leaderElectionNodeName = ElectionManager.root + "/" + this.bank.getLeader();
 			try {
-				String leaderOperationNodeName = NodeUtils.getLeaderOperationNodeName(zk, leaderElectionNodeName);
-				if (!operation_node_id.equals(leaderOperationNodeName)) {
-					zk.create(OperationsManager.root + "/" + operation_node_id + "/", operationBytes,
+				String leaderOpNodeName = NodeUtils.getLeaderOpNodeName(zk, leaderElectionNodeName);
+				if (!op_node_id.equals(leaderOpNodeName)) {
+					zk.create(OpsManager.root + "/" + op_node_id + "/", opBytes,
 							ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 				}
 			} catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
@@ -100,28 +100,28 @@ public class SendMessagesBank implements SendMessages {
 	}
 
 	public void sendAdd(Client client, boolean isLeader) {
-		OperationBank operation = new OperationBank(OperationEnum.CREATE_CLIENT, client);
-		if (isLeader) this.bank.handleReceiverMsg(operation);
-		sendMessage(operation, isLeader);
+		OpsBank op = new OpsBank(OpsEnum.CREATE_CLIENT, client);
+		if (isLeader) this.bank.handleReceiverMsg(op);
+		sendMessage(op, isLeader);
 	}
 
 	public void sendUpdate(Client client, boolean isLeader) {
-		OperationBank operation = new OperationBank(OperationEnum.UPDATE_CLIENT, client);
-		if (isLeader) this.bank.handleReceiverMsg(operation);
-		sendMessage(operation, isLeader);
+		OpsBank op = new OpsBank(OpsEnum.UPDATE_CLIENT, client);
+		if (isLeader) this.bank.handleReceiverMsg(op);
+		sendMessage(op, isLeader);
 	}
 
 	public void sendDelete(Integer accountNumber, boolean isLeader) {
-		OperationBank operation = new OperationBank(OperationEnum.DELETE_CLIENT, accountNumber);
-		if (isLeader) this.bank.handleReceiverMsg(operation);
-		sendMessage(operation, isLeader);
+		OpsBank op = new OpsBank(OpsEnum.DELETE_CLIENT, accountNumber);
+		if (isLeader) this.bank.handleReceiverMsg(op);
+		sendMessage(op, isLeader);
 	}
 
 	public void sendCreateBank (ClientDB clientDB, boolean isLeader) {
 
 		// TODO only send to new connected server
 
-		OperationBank operation = new OperationBank(OperationEnum.CREATE_BANK, clientDB);
-		sendMessage(operation, isLeader);
+		OpsBank op = new OpsBank(OpsEnum.CREATE_BANK, clientDB);
+		sendMessage(op, isLeader);
 	}
 }

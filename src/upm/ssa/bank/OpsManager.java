@@ -7,7 +7,7 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 
-public class OperationsManager {
+public class OpsManager {
 
     private ZooKeeper zk;
 
@@ -15,7 +15,7 @@ public class OperationsManager {
     public static String prefix = "node-";
 
 
-    public OperationsManager(ZooKeeper zkInstance){
+    public OpsManager(ZooKeeper zkInstance){
         this.zk = zkInstance;
     }
 

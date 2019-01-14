@@ -53,9 +53,8 @@ public class ElectionManager {
         this.bank.setLeader(leader);
         if(leader.equals(this.bank.getElectionNodeName().replace(root + "/", ""))){
             this.bank.setIsLeader(true);
-            System.out.println("****You are the leader****");
+            System.out.println("****You are the leader!****");
 
-//            this.bank.sendCreateBank();
 
             NodeDownWatcher nodeDownWatcher = new NodeDownWatcher();
             for (String node_id : nodes) {

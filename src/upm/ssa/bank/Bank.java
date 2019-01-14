@@ -21,8 +21,8 @@ public class Bank {
 	}
 
 	// Operations
-	private OperationsManager operationsManager;
-	public String operationNodeName; // /operations/0000000064
+	private OpsManager opsManager;
+	public String opNodeName; // /ops/0000000064
 
 	// Election
 	private ElectionManager electionManager;
@@ -38,14 +38,14 @@ public class Bank {
 		electionManager = new ElectionManager(zk, this);
 		this.electionNodeName = electionManager.createElectionNode();
 
-		operationsManager = new OperationsManager(zk);
-		this.operationNodeName = operationsManager.createOperationsNode();
+		opsManager = new OpsManager(zk);
+		this.opNodeName = opsManager.createOperationsNode();
 
 		membersManager = new MembersManager(zk, this);
 		this.membersNodeName = membersManager.createBaseNodes();
 		Stat stat = new Stat();
 
-		zk.setData(membersNodeName, this.operationNodeName.getBytes(), stat.getVersion());
+		zk.setData(membersNodeName, this.opNodeName.getBytes(), stat.getVersion());
 
 		Thread.sleep(1000);
 
@@ -53,35 +53,35 @@ public class Bank {
 
 		electionManager.leaderElection();
 		membersManager.listenForFollowingNode(membersNodeName);
-		// Set a watcher for operations
-		operationsManager.listenForOperationUpdates(this, this.operationNodeName);
+		// Set a watcher for ops
+		opsManager.listenForOperationUpdates(this, this.opNodeName);
 
-		// We set as data for the electionNodeName the operationNodeName.
-		// In this way we know who is the leader and its operationNodeName, so that followers
-		// can forward the operations to the leader (which will then dispatch them to everyone).
+		// We set as data for the electionNodeName the opNodeName.
+		// In this way we know who is the leader and its opNodeName, so that followers
+		// can forward the ops to the leader (which will then dispatch them to everyone).
 		stat = new Stat();
-		zk.setData(this.electionNodeName, this.operationNodeName.getBytes(), stat.getVersion());
+		zk.setData(this.electionNodeName, this.opNodeName.getBytes(), stat.getVersion());
 
 		this.sendMessages = new SendMessagesBank(zk, this);
 	}
 
-	public synchronized void handleReceiverMsg(OperationBank operation) {
-		switch (operation.getOperation()) {
+	public synchronized void handleReceiverMsg(OpsBank op) {
+		switch (op.getOperation()) {
 			case CREATE_CLIENT:
-				clientDB.createClient(operation.getClient());
+				clientDB.createClient(op.getClient());
 				break;
 			case READ_CLIENT:
-				clientDB.readClient(operation.getAccountNumber());
+				clientDB.readClient(op.getAccountNumber());
 				break;
 			case UPDATE_CLIENT:
-				clientDB.updateClient(operation.getClient().getAccountNumber(),
-									  operation.getClient().getBalance());
+				clientDB.updateClient(op.getClient().getAccountNumber(),
+									  op.getClient().getBalance());
 				break;
 			case DELETE_CLIENT:
-				clientDB.deleteClient(operation.getAccountNumber());
+				clientDB.deleteClient(op.getAccountNumber());
 				break;
 			case CREATE_BANK:
-				clientDB.createBank(operation.getClientDB());
+				clientDB.createBank(op.getClientDB()); 
 				break;
 		}
 	}

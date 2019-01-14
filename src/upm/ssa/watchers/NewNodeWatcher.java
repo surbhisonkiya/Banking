@@ -2,8 +2,8 @@ package upm.ssa.watchers;
 
 import upm.ssa.bank.Bank;
 import upm.ssa.bank.Client;
-import upm.ssa.bank.OperationBank;
-import upm.ssa.bank.OperationEnum;
+import upm.ssa.bank.OpsBank;
+import upm.ssa.bank.OpsEnum;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -31,10 +31,10 @@ public class NewNodeWatcher implements Watcher {
         }
 
         Stat stat;
-        String operationNodeName = null;
+        String opNodeName = null;
         try {
             stat = zk.exists(event.getPath(), false);
-            operationNodeName = new String(zk.getData(event.getPath(), false, stat), "UTF-8");
+            opNodeName = new String(zk.getData(event.getPath(), false, stat), "UTF-8");
         } catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -45,10 +45,10 @@ public class NewNodeWatcher implements Watcher {
 
             System.out.println("Customer: " + c);
 
-            bank.sendMessages.forwardOperationToNode(new OperationBank(
-                        OperationEnum.CREATE_CLIENT,
+            bank.sendMessages.forwardOpToNode(new OpsBank(
+                        OpsEnum.CREATE_CLIENT,
                         new Client(c.getAccountNumber(), c.getName(), c.getBalance())
-                    ), operationNodeName);
+                    ), opNodeName);
         }
 
         NodeDownWatcher nodeDownWatcher = new NodeDownWatcher();

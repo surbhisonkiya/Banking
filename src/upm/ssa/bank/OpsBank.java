@@ -2,41 +2,41 @@ package upm.ssa.bank;
 
 import java.io.*;
 
-public class OperationBank implements Serializable {
+public class OpsBank implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private OperationEnum operation;
+	private OpsEnum 	  ops;
 	private Client        client        = null;
 	private Integer       accountNumber = 0;
 	private ClientDB      clientDB      = null;
 	
    // ADD_CLIENT, UPDATE_CLIENT
-	public OperationBank (OperationEnum operation,
+	public OpsBank (OpsEnum ops,
 			            Client client) {
-		this.operation = operation;
+		this.ops = ops;
 		this.client    = client;
 	}
 	
 	// READ_CLIENT, DELETE_CLIENT
-	public OperationBank (OperationEnum operation,
+	public OpsBank (OpsEnum ops,
 						 Integer accountNumber ) {
-		this.operation     = operation;
+		this.ops     = ops;
 		this.accountNumber = accountNumber;
 	}
 
-	public OperationBank (OperationEnum operation, 
+	public OpsBank (OpsEnum ops, 
 						 ClientDB clientDB) {
-		this.operation = operation;
+		this.ops = ops;
 		this.clientDB  = clientDB;
 	}
 
 	
-	public OperationEnum getOperation() {
-		return operation;
+	public OpsEnum getOperation() {
+		return ops;
 	}
 
-	public void setOperation(OperationEnum operation) {
-		this.operation = operation;
+	public void setOperation(OpsEnum ops) {
+		this.ops = ops;
 	}
 
 	public Client getClient() {
@@ -68,7 +68,7 @@ public class OperationBank implements Serializable {
 		
 		String string = null;
 		
-		string = "OperationBank [operation=" + operation;
+		string = "OperationBank [ops=" + ops;
 		if (client != null) string = string + ", client=" + client.toString();
 		string = string + ", accountNumber=" + accountNumber + "]\n";
 		if (clientDB != null) string = string + clientDB.toString();
@@ -78,18 +78,18 @@ public class OperationBank implements Serializable {
 		return string;
 	}
 
-	public static byte[] objToByte(OperationBank operationBank) throws IOException {
+	public static byte[] objToByte(OpsBank opsBank) throws IOException {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		ObjectOutputStream objStream = new ObjectOutputStream(byteStream);
-		objStream.writeObject(operationBank);
+		objStream.writeObject(opsBank);
 
 		return byteStream.toByteArray();
 	}
 
-	public static OperationBank byteToObj(byte[] bytes) throws IOException, ClassNotFoundException {
+	public static OpsBank byteToObj(byte[] bytes) throws IOException, ClassNotFoundException {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(bytes);
 		ObjectInputStream objStream = new ObjectInputStream(byteStream);
 
-		return (OperationBank) objStream.readObject();
+		return (OpsBank) objStream.readObject();
 	}
 }
