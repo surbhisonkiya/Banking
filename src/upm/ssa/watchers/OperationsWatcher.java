@@ -39,7 +39,7 @@ public class OperationsWatcher implements Watcher {
             }
             
             Collections.sort(ops);
-            // System.out.println("Operation List (Watcher): " + ops);
+            System.out.println("Operation List (Watcher): " + ops);
 
             for (String op_id : ops) {
                 String nodePath = this.nodename + "/" + op_id;
