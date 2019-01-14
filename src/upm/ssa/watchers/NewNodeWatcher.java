@@ -39,11 +39,11 @@ public class NewNodeWatcher implements Watcher {
             e.printStackTrace();
         }
 
-        // send current state (db) to the new node
+        // send current state of the database to the new node
         for (java.util.HashMap.Entry <Integer, Client>  entry : bank.getClientDB().clientDB.entrySet()) {
             Client c = entry.getValue();
 
-            System.out.println("Customer: " + c);
+            System.out.println("Client: " + c);
 
             bank.sendMessages.forwardOpToNode(new OpsBank(
                         OpsEnum.CREATE_CLIENT,

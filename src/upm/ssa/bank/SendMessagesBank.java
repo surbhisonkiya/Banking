@@ -47,7 +47,7 @@ public class SendMessagesBank implements SendMessages {
 
 	public void forwardOpToNode(OpsBank op, String nodePath) {
 
-		System.out.println("Foward to node: " + nodePath);
+		System.out.println("Foward to new node: " + nodePath);
 
 		byte[] opBytes = new byte[0];
 		try {
