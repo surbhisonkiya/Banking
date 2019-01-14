@@ -67,7 +67,7 @@ public class SendMessagesBank implements SendMessages {
 
 	public void forwardOpToFollowers(OpsBank op) {
 
-		System.out.println("Forward op to followers: " + op);
+		System.out.println("Broadcast operation to followers: " + op);
 
 		List<String> opNodes = null;
 		try {

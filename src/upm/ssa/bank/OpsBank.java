@@ -31,11 +31,11 @@ public class OpsBank implements Serializable {
 	}
 
 	
-	public OpsEnum getOperation() {
+	public OpsEnum getOp() {
 		return ops;
 	}
 
-	public void setOperation(OpsEnum ops) {
+	public void setOp(OpsEnum ops) {
 		this.ops = ops;
 	}
 
@@ -68,12 +68,11 @@ public class OpsBank implements Serializable {
 		
 		String string = null;
 		
-		string = "OperationBank [ops=" + ops;
-		if (client != null) string = string + ", client=" + client.toString();
-		string = string + ", accountNumber=" + accountNumber + "]\n";
-		if (clientDB != null) string = string + clientDB.toString();
+		string = "[Operation = " + ops;
+		if (client != null) string = string + ", client=" + client.toString() + "]";
+		if (clientDB != null) string = string + clientDB.toString() + "]";
 
-		System.out.println("toString: " + string);
+		System.out.println("Processing... " + string);
 		
 		return string;
 	}

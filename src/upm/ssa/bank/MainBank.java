@@ -14,7 +14,7 @@ public class MainBank {
 	private ZooKeeper zk = null;
 	private static Bank bank = null;
 
-	String[] hosts = {"138.4.31.89:2181", "138.4.31.90:2182"};
+	String[] hosts = {"138.4.31.96:2181", "138.4.31.95:2182"};
 
 	public static void main(String[] args) throws KeeperException, InterruptedException {
 
@@ -48,16 +48,18 @@ public class MainBank {
 				correct = false;
 				menuKey = 0;
 				while (!correct) {
+					Thread.sleep(300);
 					System. out .println(">>> Enter desired op:\n"
-							+ "1) Create -> to create a client.\n "
-							+ "2) Read -> to show balance of a client.\n "
+							+ "1) Create -> to create a client.\n"
+							+ "2) Read -> to show balance of a client.\n"
 							+ "3) Update -> to update balance of a client.\n"
 							+ "4) Delete -> to delete a client from database.\n"
-							+ "5) BankDB -> to show list of client in bank's databse0.\n "
+							+ "5) BankDB -> to show list of client in bank's database.\n"
 							+ "6) Exit -> to exit application");
 					if (sc.hasNextInt()) {
 						menuKey = sc.nextInt();
 						correct = true;
+						
 					} else {
 						sc.next();
 						System.out.println("The input inserted is not an integer");

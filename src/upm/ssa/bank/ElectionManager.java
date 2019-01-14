@@ -38,8 +38,7 @@ public class ElectionManager {
 
         List<String> nodes = zk.getChildren(root, false);
         int r = new Random().nextInt(100);
-        // Loop for rand iterations
-        // to wait that a few nodes join
+
         for (int i = 0; i < r; i++) {
             try {
                 Thread.sleep(1);
@@ -53,7 +52,7 @@ public class ElectionManager {
         this.bank.setLeader(leader);
         if(leader.equals(this.bank.getElectionNodeName().replace(root + "/", ""))){
             this.bank.setIsLeader(true);
-            System.out.println("****You are the leader!****");
+            System.out.println("$$$$$ You are the leader! $$$$$");
 
 
             NodeDownWatcher nodeDownWatcher = new NodeDownWatcher();

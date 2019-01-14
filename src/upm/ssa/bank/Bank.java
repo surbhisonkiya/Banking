@@ -22,11 +22,11 @@ public class Bank {
 
 	// Operations
 	private OpsManager opsManager;
-	public String opNodeName; // /ops/0000000064
-
+	public String opNodeName; // 
+	
 	// Election
 	private ElectionManager electionManager;
-	private String electionNodeName; // /elections/n_0000000096
+	private String electionNodeName; //
 	private boolean isLeader = false;
 
 	private MembersManager membersManager;
@@ -53,12 +53,9 @@ public class Bank {
 
 		electionManager.leaderElection();
 		membersManager.listenForFollowingNode(membersNodeName);
-		// Set a watcher for ops
+		// Set a watcher for operations
 		opsManager.listenForOperationUpdates(this, this.opNodeName);
 
-		// We set as data for the electionNodeName the opNodeName.
-		// In this way we know who is the leader and its opNodeName, so that followers
-		// can forward the ops to the leader (which will then dispatch them to everyone).
 		stat = new Stat();
 		zk.setData(this.electionNodeName, this.opNodeName.getBytes(), stat.getVersion());
 
@@ -66,7 +63,7 @@ public class Bank {
 	}
 
 	public synchronized void handleReceiverMsg(OpsBank op) {
-		switch (op.getOperation()) {
+		switch (op.getOp()) {
 			case CREATE_CLIENT:
 				clientDB.createClient(op.getClient());
 				break;

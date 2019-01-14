@@ -37,7 +37,7 @@ public class OperationsWatcher implements Watcher {
                 e.printStackTrace();
             }
 
-            System.out.println("Ops: " + ops);
+            System.out.println("Operation List (Watcher): " + ops);
 
             for (String op_id : ops) {
                 String nodePath = this.nodename + "/" + op_id;
