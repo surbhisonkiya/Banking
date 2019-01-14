@@ -12,6 +12,7 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,7 +37,8 @@ public class OperationsWatcher implements Watcher {
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
-
+            
+            Collections.sort(ops);
             // System.out.println("Operation List (Watcher): " + ops);
 
             for (String op_id : ops) {
