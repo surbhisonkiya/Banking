@@ -167,8 +167,6 @@ public class MainBank {
 		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(2, "Giovanni Vuolo", 2500)));
 		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(3, "Raffaele Perini", 6500)));
 		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(4, "Zsolt Dargo", 4000)));
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(5, "Carol Martina", 499)));
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(6, "Christopher James", 299)));
 	}
 
 }
