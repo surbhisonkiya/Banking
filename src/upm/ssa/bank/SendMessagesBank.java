@@ -49,19 +49,37 @@ public class SendMessagesBank implements SendMessages {
 
 		System.out.println("Foward to new node: " + nodePath);
 
+		List<String> opNodes = null;
 		byte[] opBytes = new byte[0];
 		try {
 			opBytes = OpsBank.objToByte(op);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+/*
+		for (Iterator iterator = opNodes.iterator(); iterator.hasNext(); ) {
+			String op_node_id = (String) iterator.next();
 
+			// Do not send the update to the leader (itself) again
+			String leaderElectionNodeName = ElectionManager.root + "/" + this.bank.getLeader();
+			try {
+				String leaderOpNodeName = NodeUtils.getLeaderOpNodeName(zk, leaderElectionNodeName);
+				if (!op_node_id.equals(leaderOpNodeName)) {
+					System.out.println("Broadcast operation to followers: " + op);
+					zk.create(OpsManager.root + "/" + op_node_id + "/", opBytes,
+							ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+				}
+			} catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+	*/	
 		try {
-			zk.create(nodePath + "/", opBytes,
-					ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+			zk.create(OpsManager.root + "/" + nodePath + "/", opBytes,
+					ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
 		} catch (KeeperException | InterruptedException e) {
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
@@ -90,6 +108,7 @@ public class SendMessagesBank implements SendMessages {
 			try {
 				String leaderOpNodeName = NodeUtils.getLeaderOpNodeName(zk, leaderElectionNodeName);
 				if (!op_node_id.equals(leaderOpNodeName)) {
+					
 					zk.create(OpsManager.root + "/" + op_node_id + "/", opBytes,
 							ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
 				}

@@ -71,8 +71,6 @@ public class MainBank {
 						bank.createClient(this.createClient(sc));
 						break;
 					case 2: // Read client
-						
-						
 						System. out .print(">>> Enter account number (int) = ");
 						if (sc.hasNextInt()) {
 							accNumber = sc.nextInt();
@@ -135,6 +133,13 @@ public class MainBank {
 		System.out.print(">>> Enter account number (int) = ");
 		if (sc.hasNextInt()) {
 			accNumber = sc.nextInt();
+			if(bank.readClient(accNumber) == null){
+				System.out.println("Account number OK");
+			}else{
+				sc.next();
+				return null;
+			}
+			
 		} else {
 			System.out.println("The input inserted is not an integer");
 			sc.next();
@@ -163,10 +168,14 @@ public class MainBank {
 
 	public void initMembers(Bank bank) {
 
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(1, "Surbhi Sonkiya", 1000)));
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(2, "Giovanni Vuolo", 2500)));
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(3, "Raffaele Perini", 6500)));
-		bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(4, "Zsolt Dargo", 4000)));
+		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(1, "Surbhi Sonkiya", 1000)));
+		bank.createClient(new Client(1, "Surbhi Sonkiya", 1000));
+		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(2, "Giovanni Vuolo", 2500)));
+		bank.createClient( new Client(2, "Giovanni Vuolo", 2500));
+		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(3, "Raffaele Perini", 6500)));
+		bank.createClient(new Client(3, "Raffaele Perini", 6500));
+		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(4, "Zsolt Dargo", 4000)));+
+		bank.createClient(new Client(4, "Zsolt Dargo", 4000));
 	}
 
 }
