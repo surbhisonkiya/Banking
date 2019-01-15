@@ -56,24 +56,7 @@ public class SendMessagesBank implements SendMessages {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-/*
-		for (Iterator iterator = opNodes.iterator(); iterator.hasNext(); ) {
-			String op_node_id = (String) iterator.next();
 
-			// Do not send the update to the leader (itself) again
-			String leaderElectionNodeName = ElectionManager.root + "/" + this.bank.getLeader();
-			try {
-				String leaderOpNodeName = NodeUtils.getLeaderOpNodeName(zk, leaderElectionNodeName);
-				if (!op_node_id.equals(leaderOpNodeName)) {
-					System.out.println("Broadcast operation to followers: " + op);
-					zk.create(OpsManager.root + "/" + op_node_id + "/", opBytes,
-							ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-				}
-			} catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
-	*/	
 		try {
 			zk.create(OpsManager.root + "/" + nodePath + "/", opBytes,
 					ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);

@@ -110,9 +110,9 @@ public class MainBank {
 						break;
 					case 5: // Get bank DB
 						System.out.println(bank.toString());
-//						bank.sendCreateBank();
+						
 						break;
-					case 6:
+					case 6: // Exit session
 						exit = true;
 						bank.close();
 					default:
@@ -168,13 +168,9 @@ public class MainBank {
 
 	public void initMembers(Bank bank) {
 
-		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(1, "Surbhi Sonkiya", 1000)));
 		bank.createClient(new Client(1, "Surbhi Sonkiya", 1000));
-		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(2, "Giovanni Vuolo", 2500)));
 		bank.createClient( new Client(2, "Giovanni Vuolo", 2500));
-		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(3, "Raffaele Perini", 6500)));
 		bank.createClient(new Client(3, "Raffaele Perini", 6500));
-		//bank.handleReceiverMsg(new OpsBank(OpsEnum.CREATE_CLIENT, new Client(4, "Zsolt Dargo", 4000)));+
 		bank.createClient(new Client(4, "Zsolt Dargo", 4000));
 	}
 

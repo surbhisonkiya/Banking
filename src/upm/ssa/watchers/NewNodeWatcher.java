@@ -45,16 +45,7 @@ public class NewNodeWatcher implements Watcher {
 		} catch (Exception e) {
 			System.out.println("Exception: wacherMember");
 }
-       /* 
-        Stat stat;
-        String opNodeName = null;
-        try {
-            stat = zk.exists(event.getPath(), false);
-            opNodeName = new String(zk.getData(event.getPath(), false, stat), "UTF-8");
-        } catch (KeeperException | InterruptedException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-*/
+     
         // send current state of the database to the new node
         for (java.util.HashMap.Entry <Integer, Client>  entry : bank.getClientDB().clientDB.entrySet()) {
             Client c = entry.getValue();
