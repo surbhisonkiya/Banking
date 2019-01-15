@@ -88,7 +88,7 @@ public class Bank {
 	}
 
 	public Client readClient(Integer accountNumber) {
-		// Handled locally. No need for distributing
+		// Local
 		return clientDB.readClient(accountNumber);
 	}
 

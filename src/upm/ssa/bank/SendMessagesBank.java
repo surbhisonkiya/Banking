@@ -121,8 +121,6 @@ public class SendMessagesBank implements SendMessages {
 
 	public void sendCreateBank (ClientDB clientDB, boolean isLeader) {
 
-		// TODO only send to new connected server
-
 		OpsBank op = new OpsBank(OpsEnum.CREATE_BANK, clientDB);
 		sendMessage(op, isLeader);
 	}
