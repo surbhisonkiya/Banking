@@ -133,10 +133,11 @@ public class MainBank {
 		System.out.print(">>> Enter account number (int) = ");
 		if (sc.hasNextInt()) {
 			accNumber = sc.nextInt();
+			
 			if(bank.readClient(accNumber) == null){
 				System.out.println("Account number OK");
 			}else{
-				sc.next();
+				System.out.println("Account number already exists");
 				return null;
 			}
 			
