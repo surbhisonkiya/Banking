@@ -14,7 +14,7 @@ public class MainBank {
 	private ZooKeeper zk = null;
 	private static Bank bank = null;
 
-	String[] hosts = {"138.4.31.96:2181", "138.4.31.95:2182"};
+	String[] hosts = {"138.4.31.89:2181", "138.4.31.90:2182"};
 
 	public static void main(String[] args) throws KeeperException, InterruptedException {
 
