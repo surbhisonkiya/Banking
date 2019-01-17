@@ -26,7 +26,7 @@ public class OpsManager {
 
         return NodeUtils.znodeExistsOrCreate(zk, root + "/" + prefix, new byte[0],
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL);
+                CreateMode.PERSISTENT_SEQUENTIAL);
 
     }
 
